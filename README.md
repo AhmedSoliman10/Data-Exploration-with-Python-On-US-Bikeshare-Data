@@ -53,3 +53,11 @@ Ahmed Soliman - Mentioned all the help received in 'Acknowledgements' section.
 Numpy docs - Numpy documentation was very helpful in understanding the implemention of Numpy methods that I used in this project. 
 Pandas docs - Pandas documentation was very helpful in understanding the implemention of Pandas methods that I used in this project. 
 Udacity - Udacity's Data Analyst Nanodegree program and their instructors were extremely helpful.
+
+# Recently Fixed
+```bash
+18/02/2021
+added the raw data display function with possibility to add 5 more rows 
+changed float years to integer years
+added wrong input handling in the restart script condition
+```
