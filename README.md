@@ -27,6 +27,9 @@ The oldest user (does not include washington)
 The youngest user (does not include washington) 
 The most common birth year amongst users (does not include washington)
 
+After displaying those details the script goes ahead and asks the user if they want to view the raw data (5 rows of data initially) or no.
+then asks the user if they want to restart the script or no.
+
 # Requirements:
 Language: Python 3.6 or above Libraries: pandas, numpy, time
 
