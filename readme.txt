@@ -10,9 +10,25 @@ You can input 'python bikeshare_2.py' on your gitbash terminal to run this progr
 Program Details:
 The program takes user input for the city (e.g. Chicago or 1), month for which the user wants to view data (e.g. January; also includes an 'all' option to apply no month filter) and day for which the user wants to view data (e.g. Monday; also includes an 'all' to apply no day filter).
 
-Upon receiving the user input, it goes ahead and asks the user if they want to view the raw data (5 rows of data initially) or not. Following the input received, the program prints the following details:
+Upon receiving the user input the program prints the following details:
 
-Most popular month Most popular day Most popular hour Most popular start station Most popular end station Most popular combination of start and end stations Total trip duration Average trip duration Types of users by number Types of users by gender (does not include washington) The oldest user (does not include washington) The youngest user (does not include washington) The most common birth year amongst users (does not include washington)
+Most popular month 
+Most popular day 
+Most popular hour 
+Most popular start station 
+Most popular end station 
+Most popular combination of start and end stations 
+Total trip duration 
+Average trip duration 
+Types of users by number 
+Types of users by gender (does not include washington) 
+The oldest user (does not include washington) 
+The youngest user (does not include washington) 
+The most common birth year amongst users (does not include washington)
+
+After displaying those details the script goes ahead and asks the user if they want to view the raw data (5 rows of data initially) or no.
+
+then asks the user if they want to restart the script or no.
 
 Requirements:
 Language: Python 3.6 or above Libraries: pandas, numpy, time

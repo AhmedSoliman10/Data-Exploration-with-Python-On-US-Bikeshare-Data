@@ -6,7 +6,6 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
-#----------------------------------------------------------------------------------------------------------------------------------------
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -23,7 +22,7 @@ def get_filters():
     print('Washington : 3')
     city = input('Specify the city name or number to begin analyzing the data: ')
     city = city.lower()
-    while True:     # while loop for handling the unexpected input by user
+    while True:
             if city == '1' or city == 'chicago':
                 print("\nYou Have Choosen Chicago City!\n")
                 city = 'chicago'
@@ -71,21 +70,20 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
     df = pd.read_csv(CITY_DATA[city])
-    df['Start Time'] = pd.to_datetime(df['Start Time']) # convert the Start Time column to datetime
-    # extract month and day of week and hour from Start Time to create new columns
+    df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month
     df['day'] = df['Start Time'].dt.day_name()
     df['hour'] = df['Start Time'].dt.hour
 
     if month != 'all':
         months = ['january', 'february', 'march', 'april', 'may', 'june']
-        month = months.index(month) + 1 #use the index of the months list to get the corresponding int in the csv file
+        month = months.index(month) + 1
         df = df[df['month'] == month]
     if day != 'all':
         df = df[df['day'] == day.title()]
     return df
 
-#----------------------------------------------------------------------------------------------------------------------------------------
+
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
 
@@ -103,7 +101,7 @@ def time_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-#----------------------------------------------------------------------------------------------------------------------------------------
+
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
 
@@ -116,12 +114,12 @@ def station_stats(df):
     print('Most Common End Station:', common_end_station)
     # display most frequent combination of start station and end station trip
     combination = df.groupby(['Start Station','End Station'])
-    frequent_combination_station = combination.size().sort_values(ascending=False).head(1) # to display only the first row
+    frequent_combination_station = combination.size().sort_values(ascending=False).head(1)
     print('\nMost frequent combination of Start Station and End Station trip:\n', frequent_combination_station)
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-#----------------------------------------------------------------------------------------------------------------------------------------
+
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
@@ -135,7 +133,7 @@ def trip_duration_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-#----------------------------------------------------------------------------------------------------------------------------------------
+
 def user_stats(df,city):
     """Displays statistics on bikeshare users."""
 
@@ -149,18 +147,53 @@ def user_stats(df,city):
         print(df['Gender'].value_counts())
         # Display earliest, most recent, and most common year of birth
         earliest_year = df['Birth Year'].min()
-        print('\nEarliest Year:',earliest_year)
+        print('\nEarliest Year:',int(earliest_year))
 
         most_recent_year = df['Birth Year'].max()
-        print('Most Recent Year:',most_recent_year)
+        print('Most Recent Year:',int(most_recent_year))
 
         most_common_year = df['Birth Year'].mode()[0]
-        print('Most Common Year:',most_common_year)
+        print('Most Common Year:',int(most_common_year))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-#----------------------------------------------------------------------------------------------------------------------------------------
+
+def display_raw_data(df):
+    """Displays 5 rows of data from the csv file for the selected city.
+    Args:
+        param1 (df): The data frame you wish to work with.
+    Returns:
+        None.
+    """
+    response = ['yes', 'no']
+    rdata = ''
+
+    counter = 0
+    while rdata not in response:
+        print("\nDo you wish to view the raw data? Enter yes or no:")
+
+        rdata = input().lower()
+
+        if rdata == "yes":
+            print(df.head())
+        elif rdata not in response:
+            print("\nPlease check your input.")
+            print("Input does not seem to match any of the accepted responses please type Yes or No.")
+
+
+    while rdata == 'yes':
+        print("Do you wish to view more raw data?")
+        counter += 5
+        rdata = input().lower()
+        if rdata == "yes":
+             print(df[counter:counter+5])
+        elif rdata != "yes":
+             break
+
+    print('-'*80)
+
+
 def main():
     while True:
         city, month, day = get_filters()
@@ -170,10 +203,19 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df,city)
+        display_raw_data(df)
 
-        restart = input('\nWould you like to restart? Enter yes or no.\n')
-        if restart.lower() != 'yes':
-            break
+        restart = input("\nWould you like to restart? Enter yes or no.\n")
+
+        while restart.lower() != 'yes' or restart.lower() != 'no':
+            if restart.lower() == 'yes':
+                main()
+            elif restart.lower() == 'no':
+                exit()
+            else:
+                print("\nPlease check your input.")
+                print("Input does not seem to match any of the accepted responses.")
+                restart = input("\nWould you like to restart? Enter yes or no.\n")
 
 
 if __name__ == "__main__":
